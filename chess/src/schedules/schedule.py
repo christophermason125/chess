@@ -1,17 +1,18 @@
+from abc import ABC, abstractmethod
+from typing import Any
+
 from chess.src.game import game as g
 from chess.src.game.player.player import Player
 
 
-class Schedule(list):
-    order = tuple()
+class Schedule(list, ABC):
+    @abstractmethod
+    def __init__(self, __game: g.Game, /, *tasks):
+        self.game = __game
+        super().__init__(tasks)
 
-    def __init__(self, game: g.Game):
-        self.game = game
-        super().__init__(self.order)
-
-    def __call__(self, __player: Player, /, *args, **kwargs):
+    def __call__(self, __result: Any, /, *args, **kwargs):
+        result = None
         for task in self:
-            result = task(__player, *args, **kwargs)
-            if result:
-                return result
-
+            result = task(result, *args, **kwargs)
+        return result
