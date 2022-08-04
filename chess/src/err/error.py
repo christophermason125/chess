@@ -1,3 +1,4 @@
 from typing import NewType
 
-InvalidPlayerActionError = NewType("InvalidPlayerActionError", AssertionError)
+GameEndInterrupt = NewType("GameEndInterrupt", StopIteration)
+ActionPerformedInterrupt = NewType("ActionPerformedInterrupt", StopIteration)
